@@ -4,7 +4,16 @@
  * Node, Express, Supabase
  *  
  * art-router.js: contains the implemented API routes
- *  
+ * notes:
+ * - all parameters to be supplied to the routes are considered REQUIRED
+ *   - as such, not providing parameters return default error messages
+ *   - ...i technically could've provided custom error messages for all
+ *     empty parameters by setting all of them as OPTIONAL then checking if 
+ *     they're null/undefined, which is how i initially implemented the 
+ *     sortAndSkipPaintings(), but uh, i realized i'd have to do the same thing
+ *     for all other implemented routes... so i decided to keep it as is to simplify
+ *     the error-checking (i do know how to do it, trust !!) 
+ * 
  * Juliana Tafalla
  -----------------------------------------------------------------*/
 require('dotenv').config();
@@ -239,7 +248,7 @@ const paintingByID = (app) => {
 
 /* sortPaintings(): returns paintings sorted by either its title or yearOfWork */
 const sortPaintings = (app) => {
-    app.get("/api/paintings/sort/:sortBy/limit{/:ref}", async (req, res) => { 
+    app.get("/api/paintings/sort/:sortBy/limit/:ref", async (req, res) => { 
         const sort = req.params.sortBy;
         const sortBy = 
             sort == "title" ? "title"     : 
@@ -283,7 +292,7 @@ const sortPaintings = (app) => {
 
 /* sortAndSkipPaintings(): returns paintings sorted by either its title or yearOfWork. skips certain number of records specified by skip value */
 const sortAndSkipPaintings = (app) => {
-    app.get("/api/paintings/sort/:sortBy/limit/:ref/skip{/:ref2}", async (req, res) => {
+    app.get("/api/paintings/sort/:sortBy/limit/:ref/skip/:ref2", async (req, res) => {
         const sort = req.params.sortBy;
         const sortBy =
             sort == "title" ? "title"     :
@@ -294,12 +303,11 @@ const sortAndSkipPaintings = (app) => {
         const limit = 
             lim > 0 ? lim :  
             -1;            // for invalid limits (strings/zero/negative values)
-        
+
         const skip = req.params.ref2; 
         const start = 
-            parseInt(skip) >= 0 ? parseInt(skip) : 
-            skip == null ? 0                     : // currently assuming that leaving skip undefined will have the same behaviour as the previous route
-            -1;
+            parseInt(skip) > 0 ? parseInt(skip) : 
+            -1;            // for invalid start (strings/zero/negative values)
         const end = start + limit;
 
         // check for errors in advance: ensure that only the title or yearOfWork fields can be used to sort table, limit is a positive value, and skip is a positive value
@@ -315,7 +323,7 @@ const sortAndSkipPaintings = (app) => {
             res.send(jsonMessage(`uh oh, an error occurred: table cannot be skipped to = ${skip} because ${skip} is invalid!`)); 
             return;
         }
-        
+
         const { data, error } = await supabase
             .from("paintings")
             .select(`

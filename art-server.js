@@ -3,7 +3,7 @@
  * Database-Driven Art API
  * Node, Express, Supabase
  *  
- * art-server.js: contains the server listening for requests
+ * art-server.js: contains the server listening for API requests
  *  
  * Juliana Tafalla
  -----------------------------------------------------------------*/
