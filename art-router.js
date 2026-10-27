@@ -7,15 +7,16 @@
  * notes:
  * - all parameters to be supplied to the routes are considered REQUIRED
  *   - as such, not providing parameters return default error messages
- *   - ...i technically could've provided custom error messages for all
- *     empty parameters by setting all of them as OPTIONAL then checking if 
- *     they're null/undefined, which is how i initially implemented the 
- *     sortAndSkipPaintings(), but uh, i realized i'd have to do the same thing
- *     for all other implemented routes... so i decided to keep it as is to simplify
- *     the error-checking (i do know how to do it, trust !!) 
+ *   - ...i technically could've provided custom error messages for empty parameters 
+ *     by setting all parameters as OPTIONAL then checking if they're null/undefined, 
+ *     which is how i initially implemented the sortAndSkipPaintings(), but uh, 
+ *     i realized i'd have to do the same thing for all other implemented routes... 
+ *     so i decided to keep it as is to simplify the error-checking 
+ *     (i do know how to do it, trust !!) 
  * 
  * Juliana Tafalla
  -----------------------------------------------------------------*/
+
 require('dotenv').config();
 const supa = require('@supabase/supabase-js');
 const supaUrl = process.env.API_URL;
@@ -63,6 +64,7 @@ const allGalleries = (app) => {
 const galleryByID = (app) => {
     app.get("/api/galleries/:ref", async (req, res) => {
         const id = req.params.ref;
+        
         const { data, error } = await supabase 
             .from("galleries")
             .select()
@@ -258,7 +260,7 @@ const sortPaintings = (app) => {
         const lim = req.params.ref;
         const limit = 
             lim > 0 ? lim    : 
-            lim == 0 ? "ALL" : // if no limit provided, also return all paintings
+            lim == 0 ? "ALL" : // if limit is 0, return all paintings
             -1;                // for invalid limits (strings/negative values)
         
         // check for errors in advance: ensure that only the title or yearOfWork fields can be used to sort table and that limit is a positive value
@@ -530,7 +532,6 @@ const countPaintingsByGenres = (app) => {
     });
 }
 /*
-
 // an attempt to only use the API to construct query (no views); works fine until ordering by total
 // guided by: https://supabase.com/docs/guides/api/sql-to-rest
 const countPaintingsByGenres = (app) => {
