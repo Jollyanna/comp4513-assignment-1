@@ -27,7 +27,7 @@ const jsonMessage = (msg) => {
     return { message: msg };
 };
 
-// ROUTES
+// ERAS AND GALLERIES ROUTES
 /* allEras(): returns all the eras */
 const allEras = (app) => {
     app.get("/api/eras", async (req, res) => {
@@ -97,6 +97,7 @@ const galleriesByCountry = (app) => {
     });
 }
 
+// ARTISTS ROUTES
 /* allArtists(): returns all the artists */
 const allArtists = (app) => {
     app.get("/api/artists", async (req, res) => {
@@ -167,6 +168,7 @@ const artistsByCountry = (app) => {
     });
 }
 
+// GENRES ROUTES
 /* allGenres(): returns all the genres and its eras */
 const allGenres = (app) => {
     app.get("/api/genres", async (req, res) => {
@@ -230,6 +232,7 @@ const genresByPainting = (app) => {
     });
 }
 
+// PAINTINGS ROUTES
 /* paintingByID(): returns a painting specified by paintingID */
 const paintingByID = (app) => {
     app.get("/api/paintings/single/:ref", async (req, res) => {
@@ -496,6 +499,7 @@ const paintingsByEra = (app) => {
     });
 }
 
+// COUNT ROUTES
 /*  countPaintingsByGenres(): returns number of paintings by genre 
     notes: 
         - vw_count_paintings_by_genres is a view that joins the tables "genres" and "painting_genres" and groups it by the genreId field
@@ -614,20 +618,24 @@ const countPaintingsByTopGenres = (app) => {
 }
 
 module.exports = {
+    // eras and galleries routes
     allEras,
     allGalleries,
     galleryByID,
     galleriesByCountry,
 
+    // artists routes
     allArtists,
     artistByID,
     artistsByLastName,
     artistsByCountry,
 
+    // genres routes
     allGenres,
     genreByID,
     genresByPainting,
 
+    // paintings routes
     paintingByID,
     sortPaintings,
     sortAndSkipPaintings,
@@ -638,6 +646,7 @@ module.exports = {
     paintingsByGenre,
     paintingsByEra,
 
+    // count routes
     countPaintingsByGenres,
     countPaintingsByArtists,
     countPaintingsByTopGenres
