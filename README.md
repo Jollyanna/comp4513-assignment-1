@@ -1,7 +1,7 @@
 # COMP 4513 - Assignment 1: Database-Driven API
 
 ## Overview
-The repository holds the code for a database-driven API that queries an art database. The database contains data on eras, galleries, artists, genres, paintings, and shapes. The project uses Node.js and Express for the server and routing, Supabase for the database, and Render for the hosting.  
+The repository holds the code for a database-driven API that queries an art database and returns data in JSON format. The database contains data on eras, galleries, artists, genres, paintings, and shapes. The project uses Node.js and Express for the server and routing, Supabase for the database, and Render for the hosting.  
 
 ## Sample API Request and Response
 **Request**: `/api/artists/7`
