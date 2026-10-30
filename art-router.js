@@ -6,10 +6,10 @@
  * art-router.js: contains the implemented API routes
  * notes:
  * - all parameters to be supplied to the routes are considered REQUIRED
- *   - as such, not providing parameters return default error messages
+ *   - as such, not providing parameters return default error messages (ex. Cannot GET ...)
  *   - ...i technically could've provided custom error messages for empty parameters 
  *     by setting all parameters as OPTIONAL then checking if they're null/undefined, 
- *     which is how i initially implemented the sortAndSkipPaintings(), but uh, 
+ *     which is how i initially implemented sortAndSkipPaintings(), but uh, 
  *     i realized i'd have to do the same thing for all other implemented routes... 
  *     so i decided to keep it as is to simplify the error-checking 
  *     (i do know how to do it, trust !!) 
@@ -601,7 +601,10 @@ const countPaintingsByArtists = (app) => {
 */
 const countPaintingsByTopGenres = (app) => {
     app.get("/api/counts/topgenres/:ref", async (req, res) => {
-        const top = req.params.ref;
+        const top = 
+            req.params.ref > 0 ? req.params.ref :
+            0;
+
         const { data, error } = await supabase 
             .from("vw_count_paintings_by_genres")
             .select()
