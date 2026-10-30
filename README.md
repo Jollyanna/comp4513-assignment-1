@@ -71,7 +71,5 @@ The table shows the format of the endpoints, some sample API requests, and its e
 `/api/counts/topgenres/:ref` | [`/api/counts/topgenres/20`](https://comp4513-assignment-1-60wg.onrender.com/api/counts/topgenres/20) | valid request: returns the number of paintings for each genre with total paintings over 20 paintings
 `""` | [`/api/counts/topgenres/2034958`](https://comp4513-assignment-1-60wg.onrender.com/api/counts/topgenres/2034958) | request returns nothing: total reference value results in no paintings; total reference value is greater than the maximum total number of paintings
 
-<br />
-> Database-Driven API
-<br />
+> Database-Driven API <br />
 > Juliana Tafalla
