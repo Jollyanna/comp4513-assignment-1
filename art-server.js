@@ -10,7 +10,14 @@
 
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const router = require("./art-router.js");
+
+// added for assignment 2
+app.use(cors({
+    origin: "http://localhost:5173", // may need to adjust for final url
+    credentials: true
+}));
 
 // eras and galleries routes
 router.allEras(app);
