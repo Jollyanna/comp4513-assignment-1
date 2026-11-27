@@ -457,7 +457,7 @@ const paintingsByGenre = (app) => {
         const { data, error } = await supabase
             .from("paintings")
             .select(`
-                paintingID, title, yearOfWork,
+                paintingID, title, yearOfWork, imageFileName,
                 artists!inner (*),
                 galleries!inner (*),
                 painting_genres!inner ()
